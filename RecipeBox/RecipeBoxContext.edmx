@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Edmx Version="3.0" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <Runtime>
+    <ConceptualModels>
+      <Schema Namespace="RecipeBox.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GroceryType" customannotation:ClrType="RecipeBox.Models.GroceryType, RecipeBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="groceryCode" />
+          </Key>
+          <Property Name="groceryCode" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="groceryName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.Ingredient_GroceryType" FromRole="Ingredient_GroceryType_Target" ToRole="Ingredient_GroceryType_Source" />
+        </EntityType>
+        <EntityType Name="Ingredient" customannotation:ClrType="RecipeBox.Models.Ingredient, RecipeBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="ingredientID" />
+          </Key>
+          <Property Name="ingredientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="groceryCode" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="ingredientName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="GroceryType" Relationship="Self.Ingredient_GroceryType" FromRole="Ingredient_GroceryType_Source" ToRole="Ingredient_GroceryType_Target" />
+          <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredient_Ingredient" FromRole="RecipeIngredient_Ingredient_Target" ToRole="RecipeIngredient_Ingredient_Source" />
+        </EntityType>
+        <EntityType Name="RecipeIngredient" customannotation:ClrType="RecipeBox.Models.RecipeIngredient, RecipeBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="ingredientID" />
+          </Key>
+          <Property Name="recipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="ingredientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="amountUnits" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.RecipeIngredient_Ingredient" FromRole="RecipeIngredient_Ingredient_Source" ToRole="RecipeIngredient_Ingredient_Target" />
+          <NavigationProperty Name="Recipe" Relationship="Self.RecipeIngredient_Recipe" FromRole="RecipeIngredient_Recipe_Source" ToRole="RecipeIngredient_Recipe_Target" />
+        </EntityType>
+        <EntityType Name="Recipe" customannotation:ClrType="RecipeBox.Models.Recipe, RecipeBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="recipeID" />
+          </Key>
+          <Property Name="recipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="recipeName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="recipeDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="userID" Type="Int32" />
+          <NavigationProperty Name="RecipeIngredients" Relationship="Self.RecipeIngredient_Recipe" FromRole="RecipeIngredient_Recipe_Target" ToRole="RecipeIngredient_Recipe_Source" />
+          <NavigationProperty Name="RecipeMenus" Relationship="Self.RecipeMenu_Recipe" FromRole="RecipeMenu_Recipe_Target" ToRole="RecipeMenu_Recipe_Source" />
+          <NavigationProperty Name="RecipeNotes" Relationship="Self.RecipeNote_Recipe" FromRole="RecipeNote_Recipe_Target" ToRole="RecipeNote_Recipe_Source" />
+          <NavigationProperty Name="RecipeReviews" Relationship="Self.RecipeReview_Recipe" FromRole="RecipeReview_Recipe_Target" ToRole="RecipeReview_Recipe_Source" />
+          <NavigationProperty Name="UserID" Relationship="Self.Recipe_UserID" FromRole="Recipe_UserID_Source" ToRole="Recipe_UserID_Target" />
+        </EntityType>
+        <EntityType Name="RecipeMenu" customannotation:ClrType="RecipeBox.Models.RecipeMenu, RecipeBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="recipeMenuID" />
+          </Key>
+          <Property Name="recipeMenuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="recipeID" Type="Int32" />
+          <Property Name="menuID" Type="Int32" />
+          <NavigationProperty Name="MenuType" Relationship="Self.RecipeMenu_MenuType" FromRole="RecipeMenu_MenuType_Source" ToRole="RecipeMenu_MenuType_Target" />
+          <NavigationProperty Name="Recipe" Relationship="Self.RecipeMenu_Recipe" FromRole="RecipeMenu_Recipe_Source" ToRole="RecipeMenu_Recipe_Target" />
+        </EntityType>
+        <EntityType Name="MenuType" customannotation:ClrType="RecipeBox.Models.MenuType, RecipeBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="menuID" />
+          </Key>
+          <Property Name="menuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menuDescription" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RecipeMenus" Relationship="Self.RecipeMenu_MenuType" FromRole="RecipeMenu_MenuType_Target" ToRole="RecipeMenu_MenuType_Source" />
+        </EntityType>
+        <EntityType Name="RecipeNote" customannotation:ClrType="RecipeBox.Models.RecipeNote, RecipeBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="recipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="noteBody" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Recipe" Relationship="Self.RecipeNote_Recipe" FromRole="RecipeNote_Recipe_Source" ToRole="RecipeNote_Recipe_Target" />
+          <NavigationProperty Name="UserID" Relationship="Self.RecipeNote_UserID" FromRole="RecipeNote_UserID_Source" ToRole="RecipeNote_UserID_Target" />
+        </EntityType>
+        <EntityType Name="User" customannotation:ClrType="RecipeBox.Models.User, RecipeBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="screenName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RecipeNotes" Relationship="Self.RecipeNote_UserID" FromRole="RecipeNote_UserID_Target" ToRole="RecipeNote_UserID_Source" />
+          <NavigationProperty Name="RecipeReviews" Relationship="Self.RecipeReview_User" FromRole="RecipeReview_User_Target" ToRole="RecipeReview_User_Source" />
+          <NavigationProperty Name="Recipes" Relationship="Self.Recipe_UserID" FromRole="Recipe_UserID_Target" ToRole="Recipe_UserID_Source" />
+        </EntityType>
+        <EntityType Name="RecipeReview" customannotation:ClrType="RecipeBox.Models.RecipeReview, RecipeBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="reviewID" />
+          </Key>
+          <Property Name="reviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="recipeID" Type="Int32" Nullable="false" />
+          <Property Name="reviewBody" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="rating" Type="Int32" />
+          <NavigationProperty Name="Recipe" Relationship="Self.RecipeReview_Recipe" FromRole="RecipeReview_Recipe_Source" ToRole="RecipeReview_Recipe_Target" />
+          <NavigationProperty Name="User" Relationship="Self.RecipeReview_User" FromRole="RecipeReview_User_Source" ToRole="RecipeReview_User_Target" />
+        </EntityType>
+        <Association Name="Ingredient_GroceryType">
+          <End Role="Ingredient_GroceryType_Source" Type="Self.Ingredient" Multiplicity="*" />
+          <End Role="Ingredient_GroceryType_Target" Type="Self.GroceryType" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient_GroceryType_Target">
+              <PropertyRef Name="groceryCode" />
+            </Principal>
+            <Dependent Role="Ingredient_GroceryType_Source">
+              <PropertyRef Name="groceryCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeIngredient_Ingredient">
+          <End Role="RecipeIngredient_Ingredient_Source" Type="Self.RecipeIngredient" Multiplicity="*" />
+          <End Role="RecipeIngredient_Ingredient_Target" Type="Self.Ingredient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="RecipeIngredient_Ingredient_Target">
+              <PropertyRef Name="ingredientID" />
+            </Principal>
+            <Dependent Role="RecipeIngredient_Ingredient_Source">
+              <PropertyRef Name="ingredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeMenu_MenuType">
+          <End Role="RecipeMenu_MenuType_Source" Type="Self.RecipeMenu" Multiplicity="*" />
+          <End Role="RecipeMenu_MenuType_Target" Type="Self.MenuType" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeMenu_MenuType_Target">
+              <PropertyRef Name="menuID" />
+            </Principal>
+            <Dependent Role="RecipeMenu_MenuType_Source">
+              <PropertyRef Name="menuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeMenu_Recipe">
+          <End Role="RecipeMenu_Recipe_Source" Type="Self.RecipeMenu" Multiplicity="*" />
+          <End Role="RecipeMenu_Recipe_Target" Type="Self.Recipe" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeMenu_Recipe_Target">
+              <PropertyRef Name="recipeID" />
+            </Principal>
+            <Dependent Role="RecipeMenu_Recipe_Source">
+              <PropertyRef Name="recipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeNote_Recipe">
+          <End Role="RecipeNote_Recipe_Source" Type="Self.RecipeNote" Multiplicity="*" />
+          <End Role="RecipeNote_Recipe_Target" Type="Self.Recipe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="RecipeNote_Recipe_Target">
+              <PropertyRef Name="recipeID" />
+            </Principal>
+            <Dependent Role="RecipeNote_Recipe_Source">
+              <PropertyRef Name="recipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeReview_Recipe">
+          <End Role="RecipeReview_Recipe_Source" Type="Self.RecipeReview" Multiplicity="*" />
+          <End Role="RecipeReview_Recipe_Target" Type="Self.Recipe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="RecipeReview_Recipe_Target">
+              <PropertyRef Name="recipeID" />
+            </Principal>
+            <Dependent Role="RecipeReview_Recipe_Source">
+              <PropertyRef Name="recipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeReview_User">
+          <End Role="RecipeReview_User_Source" Type="Self.RecipeReview" Multiplicity="*" />
+          <End Role="RecipeReview_User_Target" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="RecipeReview_User_Target">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecipeReview_User_Source">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeNote_UserID">
+          <End Role="RecipeNote_UserID_Source" Type="Self.RecipeNote" Multiplicity="*" />
+          <End Role="RecipeNote_UserID_Target" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="RecipeNote_UserID_Target">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecipeNote_UserID_Source">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Recipe_UserID">
+          <End Role="Recipe_UserID_Source" Type="Self.Recipe" Multiplicity="*" />
+          <End Role="Recipe_UserID_Target" Type="Self.User" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe_UserID_Target">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Recipe_UserID_Source">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeIngredient_Recipe">
+          <End Role="RecipeIngredient_Recipe_Source" Type="Self.RecipeIngredient" Multiplicity="*" />
+          <End Role="RecipeIngredient_Recipe_Target" Type="Self.Recipe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="RecipeIngredient_Recipe_Target">
+              <PropertyRef Name="recipeID" />
+            </Principal>
+            <Dependent Role="RecipeIngredient_Recipe_Source">
+              <PropertyRef Name="recipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RecipeBoxContext" customannotation:UseClrTypes="true">
+          <EntitySet Name="GroceryTypes" EntityType="Self.GroceryType" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredient" />
+          <EntitySet Name="Recipes" EntityType="Self.Recipe" />
+          <EntitySet Name="RecipeMenus" EntityType="Self.RecipeMenu" />
+          <EntitySet Name="MenuTypes" EntityType="Self.MenuType" />
+          <EntitySet Name="RecipeNotes" EntityType="Self.RecipeNote" />
+          <EntitySet Name="UserIDs" EntityType="Self.User" />
+          <EntitySet Name="RecipeReviews" EntityType="Self.RecipeReview" />
+          <AssociationSet Name="Ingredient_GroceryType" Association="Self.Ingredient_GroceryType">
+            <End Role="Ingredient_GroceryType_Source" EntitySet="Ingredients" />
+            <End Role="Ingredient_GroceryType_Target" EntitySet="GroceryTypes" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeIngredient_Ingredient" Association="Self.RecipeIngredient_Ingredient">
+            <End Role="RecipeIngredient_Ingredient_Source" EntitySet="RecipeIngredients" />
+            <End Role="RecipeIngredient_Ingredient_Target" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeMenu_MenuType" Association="Self.RecipeMenu_MenuType">
+            <End Role="RecipeMenu_MenuType_Source" EntitySet="RecipeMenus" />
+            <End Role="RecipeMenu_MenuType_Target" EntitySet="MenuTypes" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeMenu_Recipe" Association="Self.RecipeMenu_Recipe">
+            <End Role="RecipeMenu_Recipe_Source" EntitySet="RecipeMenus" />
+            <End Role="RecipeMenu_Recipe_Target" EntitySet="Recipes" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeNote_Recipe" Association="Self.RecipeNote_Recipe">
+            <End Role="RecipeNote_Recipe_Source" EntitySet="RecipeNotes" />
+            <End Role="RecipeNote_Recipe_Target" EntitySet="Recipes" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeReview_Recipe" Association="Self.RecipeReview_Recipe">
+            <End Role="RecipeReview_Recipe_Source" EntitySet="RecipeReviews" />
+            <End Role="RecipeReview_Recipe_Target" EntitySet="Recipes" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeReview_User" Association="Self.RecipeReview_User">
+            <End Role="RecipeReview_User_Source" EntitySet="RecipeReviews" />
+            <End Role="RecipeReview_User_Target" EntitySet="UserIDs" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeNote_UserID" Association="Self.RecipeNote_UserID">
+            <End Role="RecipeNote_UserID_Source" EntitySet="RecipeNotes" />
+            <End Role="RecipeNote_UserID_Target" EntitySet="UserIDs" />
+          </AssociationSet>
+          <AssociationSet Name="Recipe_UserID" Association="Self.Recipe_UserID">
+            <End Role="Recipe_UserID_Source" EntitySet="Recipes" />
+            <End Role="Recipe_UserID_Target" EntitySet="UserIDs" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeIngredient_Recipe" Association="Self.RecipeIngredient_Recipe">
+            <End Role="RecipeIngredient_Recipe_Source" EntitySet="RecipeIngredients" />
+            <End Role="RecipeIngredient_Recipe_Target" EntitySet="Recipes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </ConceptualModels>
+    <Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CodeFirstDatabase" CdmEntityContainer="RecipeBoxContext">
+          <EntitySetMapping Name="GroceryTypes">
+            <EntityTypeMapping TypeName="RecipeBox.Models.GroceryType">
+              <MappingFragment StoreEntitySet="GroceryType">
+                <ScalarProperty Name="groceryCode" ColumnName="groceryCode" />
+                <ScalarProperty Name="groceryName" ColumnName="groceryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="RecipeBox.Models.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="ingredientID" ColumnName="ingredientID" />
+                <ScalarProperty Name="groceryCode" ColumnName="groceryCode" />
+                <ScalarProperty Name="ingredientName" ColumnName="ingredientName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecipeIngredients">
+            <EntityTypeMapping TypeName="RecipeBox.Models.RecipeIngredient">
+              <MappingFragment StoreEntitySet="RecipeIngredient">
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="ingredientID" ColumnName="ingredientID" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="amountUnits" ColumnName="amountUnits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="RecipeBox.Models.Recipe">
+              <MappingFragment StoreEntitySet="Recipe">
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="recipeName" ColumnName="recipeName" />
+                <ScalarProperty Name="recipeDescription" ColumnName="recipeDescription" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecipeMenus">
+            <EntityTypeMapping TypeName="RecipeBox.Models.RecipeMenu">
+              <MappingFragment StoreEntitySet="RecipeMenu">
+                <ScalarProperty Name="recipeMenuID" ColumnName="recipeMenuID" />
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="menuID" ColumnName="menuID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuTypes">
+            <EntityTypeMapping TypeName="RecipeBox.Models.MenuType">
+              <MappingFragment StoreEntitySet="MenuType">
+                <ScalarProperty Name="menuID" ColumnName="menuID" />
+                <ScalarProperty Name="menuDescription" ColumnName="menuDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecipeNotes">
+            <EntityTypeMapping TypeName="RecipeBox.Models.RecipeNote">
+              <MappingFragment StoreEntitySet="RecipeNote">
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="noteBody" ColumnName="noteBody" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserIDs">
+            <EntityTypeMapping TypeName="RecipeBox.Models.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="userID" />
+                <ScalarProperty Name="screenName" ColumnName="screenName" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecipeReviews">
+            <EntityTypeMapping TypeName="RecipeBox.Models.RecipeReview">
+              <MappingFragment StoreEntitySet="RecipeReview">
+                <ScalarProperty Name="reviewID" ColumnName="reviewID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="reviewBody" ColumnName="reviewBody" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </Mappings>
+    <StorageModels>
+      <Schema Namespace="CodeFirstDatabaseSchema" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GroceryType">
+          <Key>
+            <PropertyRef Name="groceryCode" />
+          </Key>
+          <Property Name="groceryCode" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="groceryName" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingredientID" />
+          </Key>
+          <Property Name="ingredientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="groceryCode" Type="nvarchar" customannotation:Index="{ Name: IX_groceryCode, Order: 0 }" MaxLength="2" Nullable="true" />
+          <Property Name="ingredientName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RecipeIngredient">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="ingredientID" />
+          </Key>
+          <Property Name="recipeID" Type="int" customannotation:Index="{ Name: IX_recipeID, Order: 0 }" Nullable="false" />
+          <Property Name="ingredientID" Type="int" customannotation:Index="{ Name: IX_ingredientID, Order: 0 }" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="2" Nullable="true" />
+          <Property Name="amountUnits" Type="nvarchar" MaxLength="10" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="recipeID" />
+          </Key>
+          <Property Name="recipeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="recipeName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="recipeDescription" Type="nvarchar" MaxLength="500" Nullable="true" />
+          <Property Name="userID" Type="int" customannotation:Index="{ Name: IX_userID, Order: 0 }" Nullable="true" />
+        </EntityType>
+        <EntityType Name="RecipeMenu">
+          <Key>
+            <PropertyRef Name="recipeMenuID" />
+          </Key>
+          <Property Name="recipeMenuID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="recipeID" Type="int" customannotation:Index="{ Name: IX_recipeID, Order: 0 }" Nullable="true" />
+          <Property Name="menuID" Type="int" customannotation:Index="{ Name: IX_menuID, Order: 0 }" Nullable="true" />
+        </EntityType>
+        <EntityType Name="MenuType">
+          <Key>
+            <PropertyRef Name="menuID" />
+          </Key>
+          <Property Name="menuID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menuDescription" Type="nvarchar" MaxLength="75" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RecipeNote">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="recipeID" Type="int" customannotation:Index="{ Name: IX_recipeID, Order: 0 }" Nullable="false" />
+          <Property Name="userID" Type="int" customannotation:Index="{ Name: IX_userID, Order: 0 }" Nullable="false" />
+          <Property Name="noteBody" Type="nvarchar" MaxLength="500" Nullable="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="screenName" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="userEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RecipeReview">
+          <Key>
+            <PropertyRef Name="reviewID" />
+          </Key>
+          <Property Name="reviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" customannotation:Index="{ Name: IX_userID, Order: 0 }" Nullable="false" />
+          <Property Name="recipeID" Type="int" customannotation:Index="{ Name: IX_recipeID, Order: 0 }" Nullable="false" />
+          <Property Name="reviewBody" Type="nvarchar" MaxLength="500" Nullable="true" />
+          <Property Name="rating" Type="int" Nullable="true" />
+        </EntityType>
+        <Association Name="Ingredient_GroceryType">
+          <End Role="GroceryType" Type="Self.GroceryType" Multiplicity="0..1" />
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroceryType">
+              <PropertyRef Name="groceryCode" />
+            </Principal>
+            <Dependent Role="Ingredient">
+              <PropertyRef Name="groceryCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeIngredient_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RecipeIngredient" Type="Self.RecipeIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingredientID" />
+            </Principal>
+            <Dependent Role="RecipeIngredient">
+              <PropertyRef Name="ingredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeMenu_MenuType">
+          <End Role="MenuType" Type="Self.MenuType" Multiplicity="0..1" />
+          <End Role="RecipeMenu" Type="Self.RecipeMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MenuType">
+              <PropertyRef Name="menuID" />
+            </Principal>
+            <Dependent Role="RecipeMenu">
+              <PropertyRef Name="menuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeMenu_Recipe">
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1" />
+          <End Role="RecipeMenu" Type="Self.RecipeMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="recipeID" />
+            </Principal>
+            <Dependent Role="RecipeMenu">
+              <PropertyRef Name="recipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeNote_Recipe">
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RecipeNote" Type="Self.RecipeNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="recipeID" />
+            </Principal>
+            <Dependent Role="RecipeNote">
+              <PropertyRef Name="recipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeReview_Recipe">
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RecipeReview" Type="Self.RecipeReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="recipeID" />
+            </Principal>
+            <Dependent Role="RecipeReview">
+              <PropertyRef Name="recipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeReview_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RecipeReview" Type="Self.RecipeReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="RecipeReview">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeNote_UserID">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RecipeNote" Type="Self.RecipeNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="RecipeNote">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Recipe_UserID">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeIngredient_Recipe">
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RecipeIngredient" Type="Self.RecipeIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="recipeID" />
+            </Principal>
+            <Dependent Role="RecipeIngredient">
+              <PropertyRef Name="recipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CodeFirstDatabase">
+          <EntitySet Name="GroceryType" EntityType="Self.GroceryType" Schema="dbo" Table="GroceryType" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" Table="Ingredients" />
+          <EntitySet Name="RecipeIngredient" EntityType="Self.RecipeIngredient" Schema="dbo" Table="RecipeIngredients" />
+          <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" Table="Recipe" />
+          <EntitySet Name="RecipeMenu" EntityType="Self.RecipeMenu" Schema="dbo" Table="RecipeMenu" />
+          <EntitySet Name="MenuType" EntityType="Self.MenuType" Schema="dbo" Table="MenuType" />
+          <EntitySet Name="RecipeNote" EntityType="Self.RecipeNote" Schema="dbo" Table="RecipeNotes" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" Table="User" />
+          <EntitySet Name="RecipeReview" EntityType="Self.RecipeReview" Schema="dbo" Table="RecipeReview" />
+          <AssociationSet Name="Ingredient_GroceryType" Association="Self.Ingredient_GroceryType">
+            <End Role="GroceryType" EntitySet="GroceryType" />
+            <End Role="Ingredient" EntitySet="Ingredient" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeIngredient_Ingredient" Association="Self.RecipeIngredient_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="RecipeIngredient" EntitySet="RecipeIngredient" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeMenu_MenuType" Association="Self.RecipeMenu_MenuType">
+            <End Role="MenuType" EntitySet="MenuType" />
+            <End Role="RecipeMenu" EntitySet="RecipeMenu" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeMenu_Recipe" Association="Self.RecipeMenu_Recipe">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="RecipeMenu" EntitySet="RecipeMenu" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeNote_Recipe" Association="Self.RecipeNote_Recipe">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="RecipeNote" EntitySet="RecipeNote" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeReview_Recipe" Association="Self.RecipeReview_Recipe">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="RecipeReview" EntitySet="RecipeReview" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeReview_User" Association="Self.RecipeReview_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="RecipeReview" EntitySet="RecipeReview" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeNote_UserID" Association="Self.RecipeNote_UserID">
+            <End Role="User" EntitySet="User" />
+            <End Role="RecipeNote" EntitySet="RecipeNote" />
+          </AssociationSet>
+          <AssociationSet Name="Recipe_UserID" Association="Self.Recipe_UserID">
+            <End Role="User" EntitySet="User" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeIngredient_Recipe" Association="Self.RecipeIngredient_Recipe">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="RecipeIngredient" EntitySet="RecipeIngredient" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </StorageModels>
+  </Runtime>
+  <Designer>
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <Diagrams >
+      <Diagram DiagramId="ded432604a4c4fbd92b9b9ca46faa030" Name="Diagram1">
+        <EntityTypeShape EntityType="RecipeBox.Models.GroceryType" Width="1.5" PointX="6.875" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecipeBox.Models.Ingredient" Width="1.5" PointX="6.875" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecipeBox.Models.RecipeIngredient" Width="1.5" PointX="4.625" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecipeBox.Models.Recipe" Width="1.5" PointX="0.625" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecipeBox.Models.RecipeMenu" Width="1.5" PointX="0.625" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecipeBox.Models.MenuType" Width="1.5" PointX="2.5" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecipeBox.Models.RecipeNote" Width="1.5" PointX="2.875" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecipeBox.Models.User" Width="1.5" PointX="0.625" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecipeBox.Models.RecipeReview" Width="1.5" PointX="4.875" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="RecipeBox.Models.Ingredient_GroceryType" ManuallyRouted="false" />
+        <AssociationConnector Association="RecipeBox.Models.RecipeIngredient_Ingredient" ManuallyRouted="false" />
+        <AssociationConnector Association="RecipeBox.Models.RecipeMenu_MenuType" ManuallyRouted="false" />
+        <AssociationConnector Association="RecipeBox.Models.RecipeMenu_Recipe" ManuallyRouted="false" />
+        <AssociationConnector Association="RecipeBox.Models.RecipeNote_Recipe" ManuallyRouted="false" />
+        <AssociationConnector Association="RecipeBox.Models.RecipeReview_Recipe" ManuallyRouted="false" />
+        <AssociationConnector Association="RecipeBox.Models.RecipeReview_User" ManuallyRouted="false" />
+        <AssociationConnector Association="RecipeBox.Models.RecipeNote_UserID" ManuallyRouted="false" />
+        <AssociationConnector Association="RecipeBox.Models.Recipe_UserID" ManuallyRouted="false" />
+        <AssociationConnector Association="RecipeBox.Models.RecipeIngredient_Recipe" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</Edmx>

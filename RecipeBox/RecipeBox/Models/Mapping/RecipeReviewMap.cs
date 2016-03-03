@@ -26,7 +26,7 @@ namespace RecipeBox.Models.Mapping
             this.HasRequired(t => t.Recipe)
                 .WithMany(t => t.RecipeReviews)
                 .HasForeignKey(d => d.recipeID);
-            this.HasRequired(t => t.UserID1)
+            this.HasRequired(t => t.User)
                 .WithMany(t => t.RecipeReviews)
                 .HasForeignKey(d => d.userID);
 

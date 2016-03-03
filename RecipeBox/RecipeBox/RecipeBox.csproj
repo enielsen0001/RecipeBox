@@ -170,13 +170,20 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RecipeIngredientsController.cs" />
+    <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602251601263_InitialCreate-IgnoreChanges.cs" />
+    <Compile Include="Migrations\201602251601263_InitialCreate-IgnoreChanges.Designer.cs">
+      <DependentUpon>201602251601263_InitialCreate-IgnoreChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\GroceryType.cs" />
+    <Compile Include="Models\dbTables\GroceryType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Ingredient.cs" />
+    <Compile Include="Models\dbTables\Ingredient.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mapping\GroceryTypeMap.cs" />
     <Compile Include="Models\Mapping\IngredientMap.cs" />
@@ -187,14 +194,14 @@
     <Compile Include="Models\Mapping\RecipeNoteMap.cs" />
     <Compile Include="Models\Mapping\RecipeReviewMap.cs" />
     <Compile Include="Models\Mapping\UserIDMap.cs" />
-    <Compile Include="Models\MenuType.cs" />
-    <Compile Include="Models\Recipe.cs" />
+    <Compile Include="Models\dbTables\MenuType.cs" />
+    <Compile Include="Models\dbTables\Recipe.cs" />
     <Compile Include="Models\RecipeBoxContext.cs" />
-    <Compile Include="Models\RecipeIngredient.cs" />
-    <Compile Include="Models\RecipeMenu.cs" />
-    <Compile Include="Models\RecipeNote.cs" />
-    <Compile Include="Models\RecipeReview.cs" />
-    <Compile Include="Models\UserID.cs" />
+    <Compile Include="Models\dbTables\RecipeIngredient.cs" />
+    <Compile Include="Models\dbTables\RecipeMenu.cs" />
+    <Compile Include="Models\dbTables\RecipeNote.cs" />
+    <Compile Include="Models\dbTables\RecipeReview.cs" />
+    <Compile Include="Models\dbTables\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -253,10 +260,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Recipes\Create.cshtml" />
+    <Content Include="Views\Recipes\Index.cshtml" />
+    <Content Include="Views\RecipeIngredients\Create.cshtml" />
+    <Content Include="Views\RecipeIngredients\Delete.cshtml" />
+    <Content Include="Views\RecipeIngredients\Details.cshtml" />
+    <Content Include="Views\RecipeIngredients\Edit.cshtml" />
+    <Content Include="Views\RecipeIngredients\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\dbTables\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -265,6 +278,11 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201602251601263_InitialCreate-IgnoreChanges.resx">
+      <DependentUpon>201602251601263_InitialCreate-IgnoreChanges.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

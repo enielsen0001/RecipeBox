@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RecipeBox.Models
 {
-    public partial class UserID
+    public partial class User
     {
-        public UserID()
+        public User()
         {
             this.Recipes = new List<Recipe>();
             this.RecipeNotes = new List<RecipeNote>();
             this.RecipeReviews = new List<RecipeReview>();
         }
-
-        public int ID { get; set; }
+        
+        public int userID { get; set; }
         public string screenName { get; set; }
         public string userEmail { get; set; }
         public string password { get; set; }

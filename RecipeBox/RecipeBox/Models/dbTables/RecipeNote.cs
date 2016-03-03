@@ -9,6 +9,6 @@ namespace RecipeBox.Models
         public int userID { get; set; }
         public string noteBody { get; set; }
         public virtual Recipe Recipe { get; set; }
-        public virtual UserID UserID1 { get; set; }
+        public virtual User User { get; set; }
     }
 }

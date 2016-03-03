@@ -11,6 +11,6 @@ namespace RecipeBox.Models
         public string reviewBody { get; set; }
         public Nullable<int> rating { get; set; }
         public virtual Recipe Recipe { get; set; }
-        public virtual UserID UserID1 { get; set; }
+        public virtual User User { get; set; }
     }
 }

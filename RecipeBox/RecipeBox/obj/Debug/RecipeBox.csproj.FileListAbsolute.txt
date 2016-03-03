@@ -67,3 +67,5 @@ C:\Users\erika.nielsen\Documents\My Web Sites\RecipeBox\RecipeBox\RecipeBox\bin\
 C:\Users\erika.nielsen\Documents\My Web Sites\RecipeBox\RecipeBox\RecipeBox\obj\Debug\RecipeBox.csprojResolveAssemblyReference.cache
 C:\Users\erika.nielsen\Documents\My Web Sites\RecipeBox\RecipeBox\RecipeBox\obj\Debug\RecipeBox.dll
 C:\Users\erika.nielsen\Documents\My Web Sites\RecipeBox\RecipeBox\RecipeBox\obj\Debug\RecipeBox.pdb
+C:\Users\erika.nielsen\Documents\My Web Sites\RecipeBox\RecipeBox\RecipeBox\obj\Debug\RecipeBox.Migrations.InitialCreateIgnoreChanges.resources
+C:\Users\erika.nielsen\Documents\My Web Sites\RecipeBox\RecipeBox\RecipeBox\obj\Debug\RecipeBox.csproj.GenerateResource.Cache

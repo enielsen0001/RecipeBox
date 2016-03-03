@@ -16,15 +16,15 @@ namespace RecipeBox.Models
         {
         }
 
-        public DbSet<GroceryType> GroceryTypes { get; set; }
-        public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<MenuType> MenuTypes { get; set; }
-        public DbSet<Recipe> Recipes { get; set; }
-        public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
-        public DbSet<RecipeMenu> RecipeMenus { get; set; }
-        public DbSet<RecipeNote> RecipeNotes { get; set; }
-        public DbSet<RecipeReview> RecipeReviews { get; set; }
-        public DbSet<UserID> UserIDs { get; set; }
+        public IDbSet<GroceryType> GroceryTypes { get; set; }
+        public IDbSet<Ingredient> Ingredients { get; set; }
+        public IDbSet<MenuType> MenuTypes { get; set; }
+        public IDbSet<Recipe> Recipes { get; set; }
+        public IDbSet<RecipeIngredient> RecipeIngredients { get; set; }
+        public IDbSet<RecipeMenu> RecipeMenus { get; set; }
+        public IDbSet<RecipeNote> RecipeNotes { get; set; }
+        public IDbSet<RecipeReview> RecipeReviews { get; set; }
+        //public IDbSet<User> UserIDs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -36,7 +36,12 @@ namespace RecipeBox.Models
             modelBuilder.Configurations.Add(new RecipeMenuMap());
             modelBuilder.Configurations.Add(new RecipeNoteMap());
             modelBuilder.Configurations.Add(new RecipeReviewMap());
-            modelBuilder.Configurations.Add(new UserIDMap());
+            //modelBuilder.Configurations.Add(new UserIDMap());
+        }
+
+        public System.Data.Entity.DbSet<RecipeBox.Models.User> Users
+        {
+            get; set;
         }
     }
 }

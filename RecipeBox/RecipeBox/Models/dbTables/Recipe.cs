@@ -16,9 +16,10 @@ namespace RecipeBox.Models
         public int recipeID { get; set; }
         public string recipeName { get; set; }
         public string recipeDescription { get; set; }
+        public string recipeSteps { get; set; }
         public Nullable<int> userID { get; set; }
         public virtual ICollection<RecipeNote> RecipeNotes { get; set; }
-        public virtual UserID UserID1 { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
         public virtual ICollection<RecipeMenu> RecipeMenus { get; set; }
         public virtual ICollection<RecipeReview> RecipeReviews { get; set; }
